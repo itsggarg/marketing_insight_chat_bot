@@ -1,0 +1,42 @@
+# cloudbuild.yaml (for use with Triggers, defining logsBucket here)
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/easemygrowth/my-python-app:latest', '.']
+    id: 'Build Image'
+
+  # Step 2: Push the image to Google Container Registry (GCR)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/easemygrowth/my-python-app:latest']
+    id: 'Push Image'
+
+  # Step 3: Deploy to Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    [
+      'run', 'deploy', 'marketing-insight-bot',
+      '--image', 'gcr.io/easemygrowth/my-python-app:latest',
+      '--region', 'us-central1',
+      '--platform', 'managed',
+      '--allow-unauthenticated'
+    ]
+
+# List the final image pushed
+images:
+  - 'gcr.io/easemygrowth/my-python-app:latest'
+
+# --- Configuration ---
+
+# Specify the GCS bucket for storing build logs (must exist and SA must have write permission)
+# ** ADD THIS BACK IN **
+logsBucket: 'gs://market-insight-bot-bucket'
+
+# Optional: Keep logging options here if you want GCS_ONLY behaviour
+# This ensures logs go to the specified bucket AND Cloud Logging.
+options:
+  logging: GCS_ONLY
+  # machineType: 'E2_HIGHCPU_8' # Optional
+# --- End Configuration ---
+
+# NOTE: The serviceAccount field is INTENTIONALLY OMITTED here,
+# as we will set it using the gcloud trigger update command.
