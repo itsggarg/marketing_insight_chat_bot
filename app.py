@@ -6,7 +6,7 @@ import os # <-- Import os for environment variables (recommended)
 app = Flask(__name__)
 
 # 🔥 GEMINI API KEY (RECOMMENDED: Use Environment Variable)
-GEMINI_API_KEY = "AIzaSyAdBxiYzraEbo9GhBhkARAvH5W7XEijT0U" # <-- Avoid hardcoding
+GEMINI_API_KEY = "YOUR API KEY HERE" # <-- Avoid hardcoding
 # GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 if not GEMINI_API_KEY:
     # In a real deployment, you might want Flask to exit or log a critical error
