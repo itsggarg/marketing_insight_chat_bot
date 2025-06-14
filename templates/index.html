@@ -1,82 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Insights Bot</title>
-    <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: auto; }
-        #prompt-form label { display: block; margin-bottom: 5px; font-weight: bold; }
-        #prompt-input { width: 95%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        button:hover { background-color: #0056b3; }
-        #results { margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #eee; border-radius: 4px; white-space: pre-wrap; /* Preserve whitespace */ }
-        .error { color: red; font-weight: bold; }
-        .loading { font-style: italic; color: #555; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marketing Insights Bot for {{ company_name }}</title>
+  <!-- Markdown parser for formatting AI responses -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <!-- Dynamic favicon using company icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>{{ company_icon }}</text></svg>">
 </head>
 <body>
-
-    <h1>Ask the Marketing Insights Bot</h1>
-
-    <form id="prompt-form">
-        <label for="prompt-input">Enter your question:</label>
-        <textarea id="prompt-input" name="prompt" rows="4" required></textarea>
-        <button type="submit">Get Insights</button>
-    </form>
-
-    <h2>Results:</h2>
-    <div id="results">
-        Enter a prompt above and click "Get Insights".
+  <div class="container">
+    <!-- Header section -->
+    <div class="header">
+      <h1>Marketing Insights Bot - {{ company_name }}</h1>
+      <div class="status-bar">
+        <div class="control-buttons">
+          <button id="background-btn" class="control-btn">📝 Background</button>
+          <button id="clear-history-btn" class="control-btn">🗑️ Clear History</button>
+        </div>
+      </div>
     </div>
 
-    <script>
-        const form = document.getElementById('prompt-form');
-        const promptInput = document.getElementById('prompt-input');
-        const resultsDiv = document.getElementById('results');
-
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent default page reload
-
-            const userPrompt = promptInput.value;
-            resultsDiv.textContent = 'Loading insights...'; // Show loading message
-            resultsDiv.className = 'loading'; // Apply loading style
-
-            try {
-                const response = await fetch('/ask', { // Send request to the /ask endpoint
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ prompt: userPrompt }), // Send prompt as JSON
-                });
-
-                if (!response.ok) {
-                    // Handle HTTP errors (like 400, 500)
-                    const errorData = await response.json().catch(() => ({ error: `HTTP error! status: ${response.status}` }));
-                    throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json(); // Parse the JSON response
-
-                if (data.insights) {
-                    resultsDiv.textContent = data.insights;
-                    resultsDiv.className = ''; // Remove loading/error class
-                } else if (data.error) {
-                     resultsDiv.textContent = `Error: ${data.error}`;
-                     resultsDiv.className = 'error';
-                } else {
-                     resultsDiv.textContent = 'Received an unexpected response format.';
-                     resultsDiv.className = 'error';
-                }
-
-            } catch (error) {
-                console.error('Error fetching insights:', error);
-                resultsDiv.textContent = `Error: ${error.message}`;
-                resultsDiv.className = 'error'; // Apply error style
-            }
-        });
-    </script>
-
+    <!-- Company Background Section (hidden by default) -->
+    <div id="background-section" class="background-section" style="display: none;">
+      <div class="background-header">
+        <h3>Company Background</h3>
+        <div class="background-controls">
+          <button id="edit-background-btn" class="edit-btn">✏️ Edit</button>
+          <button id="save-background-btn" class="save-btn" style="display: none;">💾 Save</button>
+          <button id="cancel-background-btn" class="cancel-btn" style="display: none;">❌ Cancel</button>
+          <button id="reset-background-btn" class="reset-btn">🔄 Reset</button>
+        </div>
+      </div>
+      <div id="background-display" class="background-display"></div>
+      <textarea id="background-editor" class="background-editor" style="display: none;" 
+                maxlength="2000" placeholder="Enter company background..."></textarea>
+      <div class="background-info">
+        <span id="background-status"></span>
+        <span id="character-count"></span>
+      </div>
+    </div>
+    
+    <!-- Chat conversation area -->
+    <div id="chat-box"></div>
+    
+    <!-- User input form -->
+    <form id="prompt-form">
+      <textarea id="prompt-input" rows="2" 
+                placeholder="Ask a question about marketing strategy..." required></textarea>
+      <button type="submit" id="send-btn">Send</button>
+    </form>
+    
+    <!-- Stop generation button (hidden by default) -->
+    <button id="stop-button">Stop</button>
+  </div>
+  
+  <!-- Store company ID for JavaScript access -->
+  <script>
+    window.COMPANY_ID = '{{ company_id }}';
+  </script>
+  
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
