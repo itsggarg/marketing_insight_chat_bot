@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing Insights Platform - Select Company</title>
+  <style>
+    /* Reset default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* Main body styling with gradient background */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    /* Main container card */
+    .container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      padding: 60px 40px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+    
+    /* Typography */
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 2.5em;
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 50px;
+      font-size: 1.2em;
+    }
+    
+    /* Company cards grid layout */
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    
+    /* Individual company card styling */
+    .company-card {
+      background: #f8f9fa;
+      border: 2px solid transparent;
+      border-radius: 15px;
+      padding: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: #333;
+    }
+    
+    /* Company card hover effects */
+    .company-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-color: #667eea;
+      background: #fff;
+    }
+    
+    /* Company card content */
+    .company-icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+    }
+    
+    .company-name {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .company-desc {
+      color: #666;
+      font-size: 0.95em;
+    }
+    
+    /* Mobile responsive design */
+    @media (max-width: 600px) {
+      .container {
+        padding: 40px 20px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      .companies-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Marketing Insights Platform</h1>
+    <p class="subtitle">Select a company to view marketing insights</p>
+    
+    <!-- Company selection grid -->
+    <div class="companies-grid">
+      <!-- Company 1 -->
+      <a href="/?id=company1" class="company-card">
+        <div class="company-icon">🛒</div>
+        <div class="company-name">Company One</div>
+        <div class="company-desc">E-commerce and retail solutions</div>
+      </a>
+      
+      <!-- Company 2 -->
+      <a href="/?id=company2" class="company-card">
+        <div class="company-icon">👔</div>
+        <div class="company-name">Company Two</div>
+        <div class="company-desc">Fashion and lifestyle products</div>
+      </a>
+      
+      <!-- Company 3 -->
+      <a href="/?id=company3" class="company-card">
+        <div class="company-icon">🏗️</div>
+        <div class="company-name">Company Three</div>
+        <div class="company-desc">Industrial and construction materials</div>
+      </a>
+      
+      <!-- Company 4 -->
+      <a href="/?id=company4" class="company-card">
+        <div class="company-icon">🥃</div>
+        <div class="company-name">Company Four</div>
+        <div class="company-desc">Beverages and hospitality</div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
