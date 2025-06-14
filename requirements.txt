@@ -1,4 +1,22 @@
-Flask
-pandas
-openpyxl
-google-generativeai
+# Marketing Insights Bot - Python Dependencies
+
+# Data processing
+numpy==1.24.3
+pandas==2.0.3
+openpyxl==3.1.2  # Excel file support
+
+# Web framework
+Flask==2.3.3
+
+# AI/ML
+google-generativeai==0.3.2  # Google Gemini API
+
+# Database
+sqlalchemy==2.0.23
+mysql-connector-python==8.2.0
+
+# Utilities
+python-dotenv==1.0.0  # Environment variable management
+
+# Production server
+gunicorn==21.2.0
